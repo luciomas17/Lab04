@@ -5,19 +5,32 @@ import java.util.Collections;
 import java.util.List;
 
 import it.polito.tdp.lab04.DAO.CorsoDAO;
+import it.polito.tdp.lab04.DAO.StudenteDAO;
 
 public class Model {
+	
+	private CorsoDAO corsoDAO;
+	private StudenteDAO studenteDAO;
+	
+	public Model() {
+		corsoDAO = new CorsoDAO();
+		studenteDAO = new StudenteDAO();
+	}
 
 	public List<String> getNomiCorsi() {
-		CorsoDAO dao = new CorsoDAO();
 		List<String> nomiCorsi = new ArrayList<String>();
 		
-		for(Corso c : dao.getTuttiICorsi())
+		for(Corso c : corsoDAO.getTuttiICorsi())
 			nomiCorsi.add(c.getNome());
 		
 		Collections.sort(nomiCorsi);
 		
 		return nomiCorsi;
+	}
+
+	public Studente getStudente(int matricola) {
+		
+		return studenteDAO.findStudenteFromMatricola(matricola);
 	}
 
 }

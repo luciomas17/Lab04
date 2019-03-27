@@ -41,12 +41,12 @@ public class CorsoDAO {
 			
 			conn.close();
 
-			return corsi;
-
 		} catch (SQLException e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 			throw new RuntimeException("Errore Db");
 		}
+	
+		return corsi;
 	}
 
 	/*

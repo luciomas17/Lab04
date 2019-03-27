@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.lab04.model.Model;
+import it.polito.tdp.lab04.model.Studente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -63,7 +64,25 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doCercaStudente(ActionEvent event) {
-
+    	int matricola = -1;
+    	
+    	try {
+			matricola = Integer.parseInt(this.txtMatricolaStudente.getText());
+			
+		} catch (NumberFormatException e) {
+			this.txtOutput.appendText("Errore: inserisci un numero di matricola valido.\n");
+			e.printStackTrace();
+		}
+    	
+    	Studente s = this.model.getStudente(matricola);
+    	
+    	if(s == null)
+    		this.txtOutput.appendText("Studente non trovato.\n");
+    	
+    	else {
+    		this.txtNomeStudente.setText(s.getNome());
+    		this.txtCognomeStudente.setText(s.getCognome());
+    	}
     }
 
     @FXML
