@@ -71,7 +71,15 @@ public class Studente {
 
 	@Override
 	public String toString() {
-		return String.format("Studente [matricola=%s, cognome=%s, nome=%s, CDS=%s]", matricola, cognome, nome, CDS);
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(String.format("%-10s ", matricola));
+		sb.append(String.format("%-20s ", cognome));
+		sb.append(String.format("%-20s ", nome));			
+		sb.append(String.format("%-10s ", CDS));
+		sb.append("\n");
+		
+		return sb.toString();
 	}
 	
 }

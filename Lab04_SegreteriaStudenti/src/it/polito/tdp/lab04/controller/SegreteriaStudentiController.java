@@ -1,6 +1,7 @@
 package it.polito.tdp.lab04.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.lab04.model.Model;
@@ -59,11 +60,25 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doCercaIscrittiCorsi(ActionEvent event) {
-
+    	this.txtOutput.clear();
+    	
+    	String corso = this.comboCorsi.getSelectionModel().getSelectedItem();
+    	
+    	if(corso == null || corso.equals("")) {
+    		this.txtOutput.appendText("Errore: seleziona un corso.\n");
+    		return;
+    	}
+    	
+    	List<Studente> studentiIscritti = this.model.getStudentiIscrittiAlCorso(corso);
+    	
+    	for(Studente s : studentiIscritti)
+    		this.txtOutput.appendText(s.toString());
     }
 
     @FXML
     void doCercaStudente(ActionEvent event) {
+    	this.txtOutput.clear();
+    	
     	int matricola = -1;
     	
     	try {
@@ -111,7 +126,8 @@ public class SegreteriaStudentiController {
         assert btnIscrivi != null : "fx:id=\"btnIscrivi\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
         assert txtOutput != null : "fx:id=\"txtOutput\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
-
+        
+        this.txtOutput.setStyle("-fx-font-family: monospace");
     }
     
     public void setModel(Model model) {
