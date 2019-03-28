@@ -88,9 +88,9 @@ public class SegreteriaStudentiController {
        		
     	} else {
     		if(this.model.isIscrittoAlCorso(corso, s))
-    			this.txtOutput.appendText(String.format("Lo studente %d %s %s è iscritto al corso di %s.\n", s.getMatricola(), s.getNome(), s.getCognome(), corso));
+    			this.txtOutput.appendText("Studente già iscritto a questo corso.");
     		else
-    			this.txtOutput.appendText(String.format("Lo studente %d %s %s NON è iscritto al corso di %s.\n", s.getMatricola(), s.getNome(), s.getCognome(), corso));
+    			this.txtOutput.appendText("Studente NON iscritto a questo corso.");
     	}
     	
     	
@@ -138,7 +138,41 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doIscrivi(ActionEvent event) {
-
+    	this.txtOutput.clear();
+    	
+    	String corso = this.comboCorsi.getSelectionModel().getSelectedItem();
+    	
+    	if(corso == null || corso.equals("")) {
+    		this.txtOutput.appendText("Errore: seleziona un corso.\n");
+    		return;
+    	}
+    	
+    	int matricola = -1;
+   
+    	try {
+			matricola = Integer.parseInt(this.txtMatricolaStudente.getText().trim());
+			
+		} catch (NumberFormatException e) {
+			this.txtOutput.appendText("Errore: inserisci un numero di matricola valido.\n");
+			e.printStackTrace();
+		}
+    	
+    	Studente s = this.model.getStudente(matricola);
+    	
+    	if(s == null) {
+    		this.txtOutput.appendText("Errore: inserisci uno studente esistente.\n");
+    		return;
+    	}
+    	this.txtNomeStudente.setText(s.getNome());
+		this.txtCognomeStudente.setText(s.getCognome());
+		
+		if(this.model.isIscrittoAlCorso(corso, s))
+			this.txtOutput.appendText("Studente già iscritto a questo corso.");
+		else {
+			boolean result = this.model.iscriviStudenteAlCorso(s, corso);
+			if(result)
+				this.txtOutput.appendText("Studente iscritto correttamente al corso.\n");
+		}
     }
 
     @FXML

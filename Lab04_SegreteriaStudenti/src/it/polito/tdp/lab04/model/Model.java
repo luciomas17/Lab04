@@ -51,4 +51,10 @@ public class Model {
 		
 		return false;
 	}
+
+	public boolean iscriviStudenteAlCorso(Studente s, String corso) {
+		Corso c = corsoDAO.findCorsoFromNome(corso);
+		
+		return corsoDAO.inscriviStudenteACorso(s, c);
+	}
 }

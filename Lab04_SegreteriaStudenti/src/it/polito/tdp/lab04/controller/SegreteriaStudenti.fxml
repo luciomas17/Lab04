@@ -69,12 +69,12 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <TextField fx:id="txtNomeStudente" editable="false">
+                  <TextField fx:id="txtNomeStudente" editable="false" promptText="Nome">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField fx:id="txtCognomeStudente" editable="false">
+                  <TextField fx:id="txtCognomeStudente" editable="false" promptText="Cognome">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
