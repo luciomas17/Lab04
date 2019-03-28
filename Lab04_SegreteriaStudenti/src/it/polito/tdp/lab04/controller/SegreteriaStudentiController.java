@@ -58,6 +58,8 @@ public class SegreteriaStudentiController {
     void doCercaCorsi(ActionEvent event) {
     	this.txtOutput.clear();
     	
+    	String corso = this.comboCorsi.getSelectionModel().getSelectedItem();
+    	
     	int matricola = -1;
     	
     	try {
@@ -78,10 +80,20 @@ public class SegreteriaStudentiController {
     	this.txtNomeStudente.setText(s.getNome());
 		this.txtCognomeStudente.setText(s.getCognome());
     	
-    	List<Corso> corsi = this.model.getCorsiStudente(s);
-    		
-   		for(Corso c : corsi)
-       		this.txtOutput.appendText(c.toString() + "\n");
+    	if(corso == null || corso.equals("")) {
+    		List<Corso> corsi = this.model.getCorsiStudente(s);
+        		
+       		for(Corso c : corsi)
+           		this.txtOutput.appendText(c.toString() + "\n");
+       		
+    	} else {
+    		if(this.model.isIscrittoAlCorso(corso, s))
+    			this.txtOutput.appendText(String.format("Lo studente %d %s %s è iscritto al corso di %s.\n", s.getMatricola(), s.getNome(), s.getCognome(), corso));
+    		else
+    			this.txtOutput.appendText(String.format("Lo studente %d %s %s NON è iscritto al corso di %s.\n", s.getMatricola(), s.getNome(), s.getCognome(), corso));
+    	}
+    	
+    	
     }
 
     @FXML
