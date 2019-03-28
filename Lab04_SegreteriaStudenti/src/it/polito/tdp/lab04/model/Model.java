@@ -43,4 +43,12 @@ public class Model {
 		return corsoDAO.listCorsiByStudente(s.getMatricola());
 	}
 
+	public boolean isIscrittoAlCorso(String corso, Studente studente) {
+		for(Studente s : corsoDAO.listStudentiIscrittiAlCorso(corso)) {
+			if(s.equals(studente))
+				return true;
+		}
+		
+		return false;
+	}
 }
