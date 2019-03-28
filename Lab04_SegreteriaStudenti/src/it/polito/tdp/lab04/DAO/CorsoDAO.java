@@ -15,7 +15,7 @@ public class CorsoDAO {
 	/*
 	 * Ottengo tutti i corsi salvati nel Db
 	 */
-	public List<Corso> getTuttiICorsi() {
+	public List<Corso> listCorsiAll() {
 
 		final String sql = "SELECT * FROM corso";
 
@@ -97,5 +97,38 @@ public class CorsoDAO {
 		// TODO
 		// ritorna true se l'iscrizione e' avvenuta con successo
 		return false;
+	}
+
+	public List<Corso> listCorsiByStudente(int matricola) {
+		
+		final String sql = "SELECT * FROM corso c, studente s, iscrizione i WHERE s.matricola = ? AND i.matricola = s.matricola AND i.codins = c.codins";
+		
+		List<Corso> corsi = new LinkedList<Corso>();
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, matricola);
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				String codins = rs.getString("c.codins");
+				int numeroCrediti = rs.getInt("c.crediti");
+				String nome = rs.getString("c.nome");
+				int periodoDidattico = rs.getInt("c.pd");
+
+				corsi.add(new Corso(codins, numeroCrediti, nome, periodoDidattico));
+			}
+			
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Errore Db");
+		}
+	
+		return corsi;
 	}
 }

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.lab04.model.Corso;
 import it.polito.tdp.lab04.model.Model;
 import it.polito.tdp.lab04.model.Studente;
 import javafx.event.ActionEvent;
@@ -55,7 +56,32 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doCercaCorsi(ActionEvent event) {
-
+    	this.txtOutput.clear();
+    	
+    	int matricola = -1;
+    	
+    	try {
+			matricola = Integer.parseInt(this.txtMatricolaStudente.getText().trim());
+			
+		} catch (NumberFormatException e) {
+			this.txtOutput.appendText("Errore: inserisci un numero di matricola valido.\n");
+			e.printStackTrace();
+		}
+    	
+    	Studente s = this.model.getStudente(matricola);
+    	
+    	if(s == null) {
+    		this.txtOutput.appendText("Studente non trovato.\n");
+    		return;
+    	}
+    	
+    	this.txtNomeStudente.setText(s.getNome());
+		this.txtCognomeStudente.setText(s.getCognome());
+    	
+    	List<Corso> corsi = this.model.getCorsiStudente(s);
+    		
+   		for(Corso c : corsi)
+       		this.txtOutput.appendText(c.toString() + "\n");
     }
 
     @FXML
@@ -72,17 +98,15 @@ public class SegreteriaStudentiController {
     	List<Studente> studentiIscritti = this.model.getStudentiIscrittiAlCorso(corso);
     	
     	for(Studente s : studentiIscritti)
-    		this.txtOutput.appendText(s.toString());
+    		this.txtOutput.appendText(s.toString() + "\n");
     }
 
     @FXML
     void doCercaStudente(ActionEvent event) {
-    	this.txtOutput.clear();
-    	
     	int matricola = -1;
     	
     	try {
-			matricola = Integer.parseInt(this.txtMatricolaStudente.getText());
+			matricola = Integer.parseInt(this.txtMatricolaStudente.getText().trim());
 			
 		} catch (NumberFormatException e) {
 			this.txtOutput.appendText("Errore: inserisci un numero di matricola valido.\n");

@@ -20,7 +20,7 @@ public class Model {
 	public List<String> getNomiCorsi() {
 		List<String> nomiCorsi = new ArrayList<String>();
 		
-		for(Corso c : corsoDAO.getTuttiICorsi())
+		for(Corso c : corsoDAO.listCorsiAll())
 			nomiCorsi.add(c.getNome());
 		
 		Collections.sort(nomiCorsi);
@@ -36,6 +36,11 @@ public class Model {
 	public List<Studente> getStudentiIscrittiAlCorso(String corso) {
 		
 		return corsoDAO.listStudentiIscrittiAlCorso(corso);
+	}
+
+	public List<Corso> getCorsiStudente(Studente s) {
+
+		return corsoDAO.listCorsiByStudente(s.getMatricola());
 	}
 
 }

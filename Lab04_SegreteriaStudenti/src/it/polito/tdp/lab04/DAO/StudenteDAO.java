@@ -26,8 +26,6 @@ public class StudenteDAO {
 				String cognome = rs.getString("cognome");
 				String nome = rs.getString("nome");
 				String CDS = rs.getString("CDS");
-				
-				System.out.println(matricola + " " + cognome + " " + nome + " " + CDS);
 					
 				s = new Studente(matricola, cognome, nome, CDS);
 			}
